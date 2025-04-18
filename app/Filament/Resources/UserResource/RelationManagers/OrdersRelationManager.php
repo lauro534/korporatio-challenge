@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\CategoryResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,20 +12,19 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductsRelationManager extends RelationManager
+class OrdersRelationManager extends RelationManager
 {
-    protected static string $relationship = 'products';
+    protected static string $relationship = 'orders';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')
+                TextInput::make('quantity')
                     ->required()
                     ->maxLength(255),
-                Select::make('categories')
-                    ->relationship('categories', 'name')
-                    ->multiple()
+                Select::make('product_id')
+                    ->relationship('product', 'name')
                     ->required(),
             ]);
     }
@@ -33,9 +32,10 @@ class ProductsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
+            ->recordTitleAttribute('quantity')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('product.name'),
+                Tables\Columns\TextColumn::make('quantity'),
             ])
             ->filters([
                 //

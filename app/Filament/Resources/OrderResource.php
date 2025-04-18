@@ -8,6 +8,7 @@ use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -25,6 +26,14 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->preload()
+                    ->required(),
+                Select::make('product_id')
+                    ->relationship('product', 'name')
+                    ->preload()
+                    ->required(),
                 TextInput::make('quantity')->numeric()->required(),
             ]);
     }
@@ -33,6 +42,8 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('user.name')->searchable(),
+                TextColumn::make('product.name')->searchable(),
                 TextColumn::make('quantity')->sortable(),
             ])
             ->filters([
