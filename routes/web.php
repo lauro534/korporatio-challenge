@@ -10,13 +10,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/products', [ShopController::class, 'index']);
-Route::get('/products/{slug}', [ShopController::class, 'show'])->name('product.show');
-Route::post('/cart/add', [ShopController::class, 'addToCart']);
-
-Route::view('dashboard', 'dashboard')
+Route::view('products', 'products')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('shop');
+
+Route::view('orders', 'orders')
+    ->middleware(['auth', 'verified'])
+    ->name('order');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
