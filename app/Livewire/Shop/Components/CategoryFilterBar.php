@@ -12,12 +12,11 @@ class CategoryFilterBar extends Component
     public $selected = [];
     public $categories = [];
 
-    public function toggleDropdown(){
+    public function toggleDropdown() {
         $this->open = !$this->open;
     }
 
-    public function toggleSelection($id)
-    {
+    public function toggleSelection($id) {
         if (in_array($id, $this->selected)) {
             $this->selected = array_values(array_filter($this->selected, function ($item) use ($id) {
                 return $item !== $id;
@@ -25,29 +24,29 @@ class CategoryFilterBar extends Component
         } else {
             $this->selected[] = $id;
         }
+        $this->dispatch('filterByCategories', selected: $this->selected);
     }
 
-    public function filtered(){
+    public function filtered() {
         return $this->categories->filter(function($c){
             return str_contains(strtolower($c->name), strtolower($this->search));
         });
     }
     
-    public function filterByCategories()
-    {
+    public function filterByCategories() {
         $this->open = false;
         $this->dispatch('filterByCategories', selected: $this->selected);
     }
-    public function isSelected($id){
+
+    public function isSelected($id) {
         return in_array($id, $this->selected);
     }
 
-    public function mount(){
+    public function mount() {
         $this->categories = Category::all();
     }
     
-    public function render()
-    {
+    public function render() {
         return view('livewire.shop.components.category-filter-bar');
     }
 }

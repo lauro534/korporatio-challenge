@@ -46,50 +46,50 @@ class Products extends Component
     ];
     protected $listeners = ['addToCart' => 'addToCart', 'makeOrder'=>'makeOrder', 'search' => 'search', 'sort'=>'sort', 'filterByCategories' => 'filterByCategories'];
 
-    public function mount($selected = [])
-    {
+    public function mount($selected = []) {
         $this->products = Product::all();
         $this->selectedCategories = $selected ? : [];
     }
 
-    public function addToCart($product){
+    public function addToCart($product) {
         $this->dispatch('showAddToCartModal', $product);
     }
 
-    public function sort($selectedOption){
+    public function sort($selectedOption) {
         $sortOption = collect($this -> sortOptions)->firstWhere('optionName', $selectedOption);
-        if($sortOption['direction'] === 'asc')
+        if($sortOption['direction'] === 'asc') {
             $this->products = $this->products->sortBy($sortOption['field']);
-        else if($sortOption['direction'] === 'desc')
-            $this->products = $this->products->sortByDesc($sortOption['field']);
+            return;
+        }
+        $this->products = $this->products->sortByDesc($sortOption['field']);
     }
 
-    public function filterByCategories($selected){
-        if($selected !== []){
-            $this->products = Product::whereHas('categories', function ($query) use ($selected) {
-                $query->whereIn('categories.id', $selected);
-            })->get();
-        }
-        else
-            $this->products = Product::all();
+    public function filterByCategories($selected) {
         $this->dispatch('search-clear');
-    }
-
-    public function search($search){
-        $selected = $this->selectedCategories;
         if($selected !== []){
             $this->products = Product::whereHas('categories', function ($query) use ($selected) {
                 $query->whereIn('categories.id', $selected);
             })->get();
+            return;
         }
-        else
+        $this->products = Product::all();
+    }
+
+    public function search($search) {
+        $selected = $this->selectedCategories;
+        if($selected !== []) {
+            $this->products = Product::whereHas('categories', function ($query) use ($selected) {
+                $query->whereIn('categories.id', $selected);
+            })->get();
+        }
+        else 
             $this->products = Product::all();
         $this->products = collect($this->products)->filter(function ($product) use($search){
             return stripos($product['name'], $search) !== false;
         });
     }
 
-    public function makeOrder($count, $productId){
+    public function makeOrder($count, $productId) {
         $order = Order::where('user_id', auth()->user()->id)
             ->where('product_id', $productId)
             ->get()->first();
@@ -108,8 +108,7 @@ class Products extends Component
         $this->dispatch('notify', 'Product ordered successfully!');
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.shop.products', [
             'products' => $this->products,
         ]);

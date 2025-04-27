@@ -11,21 +11,20 @@ class ConfirmModal extends Component
 
     protected $listeners = ['showModal' => 'showModal', 'hideModal' => 'hideModal'];
 
-    public function showModal($orderId){
+    public function showModal($orderId) {
         $this->showModal = true;
         $this->orderId = $orderId;
     }
 
-    public function hideModal(){
+    public function hideModal() {
         $this->showModal = false;
     }
 
-    public function deleteOrder(){
+    public function deleteOrder() {
         $this->dispatch('deleteOrder', orderId: $this->orderId);
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.shop.components.confirm-modal');
     }
 }

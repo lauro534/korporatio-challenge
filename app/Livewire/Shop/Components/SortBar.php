@@ -10,18 +10,17 @@ class SortBar extends Component
     public $selected = "Sort";
     public $options = ['Price: High to Low', 'Price: Low to High', 'Name: A to Z', 'Name: Z to A', 'Newest', 'Latest'];
 
-    public function toggleDropdown(){
+    public function toggleDropdown() {
         $this->open = !$this->open;
     }
     
-    public function handleSort($option){
+    public function handleSort($option) {
         $this->selected = $option;
         $this->open = false;
         $this->dispatch('sort', $option);
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.shop.components.sort-bar');
     }
 }

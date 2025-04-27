@@ -19,18 +19,15 @@ class Product extends Model
         'weight',
     ];
 
-    public function categories()
-    {
+    public function categories() {
         return $this->belongsToMany(Category::class);
     }
 
-    public function orders()
-    {
+    public function orders() {
         return $this->hasMany(Order::class);
     }
 
-    public static function boot()
-    {
+    public static function boot() {
         parent::boot();
 
         static::creating(function ($product) {

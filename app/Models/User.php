@@ -39,8 +39,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
+    protected function casts(): array {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
@@ -50,16 +49,14 @@ class User extends Authenticatable
     /**
      * Get the user's initials
      */
-    public function initials(): string
-    {
+    public function initials(): string {
         return Str::of($this->name)
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
-    public function orders()
-    {
+    public function orders() {
         return $this->hasMany(Order::class);
     }
 }

@@ -1,8 +1,8 @@
-<div class="md:w-[15%] content-end ">
+<div class="content-end ">
     <div class="flex items-center">
         <div class="relative inline-block text-left">
             <button wire:click="toggleDropdown" type="button"
-                class="w-full bg-gray-300 mx-2 p-1 border-black-500 border-2 rounded-md group inline-flex items-center justify-center text-lg font-medium text-gray-700 hover:text-gray-900 focus:outline-none"
+                class="w-full bg-gray-300 mx-2 p-2 border-black-500 border-2 rounded-md group inline-flex items-center justify-center text-lg font-medium text-gray-700 hover:text-gray-900 focus:outline-none"
                 id="menu-button" aria-expanded="true" aria-haspopup="true">
                 <span>{{ $selected }}</span>
                 <svg class="ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor"
