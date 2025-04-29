@@ -81,9 +81,9 @@ class Products extends Component
             $this->products = Product::whereHas('categories', function ($query) use ($selected) {
                 $query->whereIn('categories.id', $selected);
             })->get();
-        }
-        else 
+        } else {
             $this->products = Product::all();
+        }
         $this->products = collect($this->products)->filter(function ($product) use($search){
             return stripos($product['name'], $search) !== false;
         });
@@ -93,11 +93,10 @@ class Products extends Component
         $order = Order::where('user_id', auth()->user()->id)
             ->where('product_id', $productId)
             ->get()->first();
-        if($order){
+        if($order) {
             $order->quantity += $count;
             $order->save();
-        }
-        else{
+        } else {
             Order::create([
                 'user_id' => auth()->user()->id,
                 'product_id' => $productId,

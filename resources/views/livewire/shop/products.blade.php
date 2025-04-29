@@ -1,9 +1,15 @@
 <div>
-    <div class="md:flex">
+    <div class="grid grid-cols-12 gap-4 flex flex-row items-start">
         {{-- SearchBar --}}
-        <livewire:shop.components.search-bar />
-        <livewire:shop.components.category-filter-bar />
-        <livewire:shop.components.sort-bar />
+        <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-2">
+            <livewire:shop.components.search-bar />
+        </div>
+        <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-2">
+            <livewire:shop.components.category-filter-bar />
+        </div>
+        <div class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-2">
+            <livewire:shop.components.sort-bar />
+        </div>        
     </div>
     <br />
     <div class="grid grid-cols-12 gap-4">
