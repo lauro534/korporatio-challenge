@@ -65,6 +65,7 @@ class Products extends Component
     }
 
     public function filterByCategories($selected) {
+        $this->selectedCategories = $selected;
         $this->dispatch('search-clear');
         if($selected !== []){
             $this->products = Product::whereHas('categories', function ($query) use ($selected) {
